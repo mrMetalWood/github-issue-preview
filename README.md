@@ -1,4 +1,4 @@
-# GitHub Issue Preview
+# GitHub Issue Preview - Chrome Extension
 
 Get a quick preview of GitHub issues while scanning through them.
 Adds a little preview button next to GitHub issues so that you can get a quick preview of what is discussed in that issue without having to go to the issue page.
