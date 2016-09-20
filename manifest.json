@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "name": "GitHub Issue Preview",
+  "description": "Get a quick preview of GitHub issues while scanning through them.",
+  "version": "0.0.2",
+  "icons": {
+    "16": "src/images/eye16.png",
+    "48": "src/images/eye48.png",
+    "128": "src/images/eye128.png"
+  },
+  "browser_action": {
+    "default_icon": "src/images/eye128.png",
+    "default_popup": "src/html/popup.html"
+  },
+  "content_scripts": [{
+    "all_frames": true,
+    "js": [
+      "src/scripts/lib/marked.js",
+      "src/scripts/issue-preview.js"
+    ],
+    "matches": [
+      "http://github.com/*/*",
+      "https://github.com/*/*"
+    ]
+  }],
+  "options_ui": {
+    "page": "src/html/options.html",
+    "chrome_style": true
+  },
+  "permissions": ["activeTab", "storage"]
+}

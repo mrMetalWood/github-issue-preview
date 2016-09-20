@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GitHub Issue Preview options</title>
+  <style>
+    body {
+      padding: 10px;
+      font-size: 16px;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    .save {
+      margin-top: 10px;
+    }
+    .token {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <p>
+    For the extension to do its thing you will need an access token for the GitHub API.
+  </p>
+  <ol>
+    <li>
+      Go to <a href="https://github.com/settings/tokens">https://github.com/settings/tokens</a>
+    </li>
+    <li>Click "<em>Generate new token</em>".</li>
+    <li>Enter a token description, e.g. "Issue Preview Extension".</li>
+    <li>Check the "<em>repo</em>" checkbox.</li>
+    <li>Click "<em>Generate token</em>".</li>
+    <li>Copy the token and paste it in the textfield below.</li>
+    <li>Click "<em>Save</em>".</li>
+  </ol>
+  <br />
+  <b>GitHub API token</b>:
+  <input type="text" class="token">
+
+  <div class="status"></div>
+  <button class="save">Save</button>
+
+  <script src="../scripts/options.js"></script>
+</body>
+</html>
