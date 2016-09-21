@@ -36,16 +36,12 @@ class IssuePreview {
 
       if (kanbanIssues && isProjects) {
         for (let i = 0; i < kanbanIssues.length; i++) {
-          kanbanIssues[i].addEventListener('click', event =>
-            this.handlePreviewClick(event));
           kanbanIssues[i].appendChild(this.createPreviewButton(35, 12));
         }
       }
 
       if (issues && isIssues) {
         for (let i = 0; i < issues.length; i++) {
-          issues[i].addEventListener('click', event =>
-            this.handlePreviewClick(event));
           issues[i].style.position = 'relative';
           issues[i].appendChild(this.createPreviewButton(35, -14));
         }
@@ -158,6 +154,9 @@ class IssuePreview {
 
     preview.style.cssText = `width: 15px; height: 15px; position: absolute; top: ${top}px; left: ${left}px; cursor: pointer;`;
     preview.innerHTML = eyeIcon;
+
+    preview.addEventListener('click', event =>
+      this.handlePreviewClick(event));
 
     return preview;
   }
