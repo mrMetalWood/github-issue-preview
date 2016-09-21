@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "GitHub Issue Preview",
   "description": "Get a quick preview of GitHub issues while scanning through them.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "icons": {
     "16": "src/images/eye16.png",
     "48": "src/images/eye48.png",
