@@ -19,7 +19,10 @@ class IssuePreview {
     this.overlay.addEventListener('click', () => this.remove());
 
     this.content = document.createElement('div');
-    this.content.style.cssText = "width: 800px; height: 80vh; background: #fff; padding: 40px 20px; overflow-y: auto; z-index: 101";
+    this.content.style.cssText = "width: 800px; height: 80vh; background: #fff; padding: 40px 20px; overflow-y: auto; z-index: 101; position: relative;";
+
+    this.status = document.createElement('div');
+    this.status.style.cssText = "width: 100%; text-align: center; position: absolute; top: 0; left: 0";
 
     this.initButtons();
   }
@@ -87,7 +90,8 @@ class IssuePreview {
           title: issue.title,
           number: issue.number,
           author: issue.user.login,
-          body: issue.body
+          body: issue.body,
+          url: issue.html_url
         };
 
         fetch(`${issue.comments_url}?access_token=${GITHUB_TOKEN}`)
@@ -104,13 +108,33 @@ class IssuePreview {
   }
 
   assemble() {
-    const {container, overlay, content, createComment} = this;
-    const {title, number, author, body, comments} = this.issue;
+    const {container, status, overlay, content, createComment} = this;
+    const {title, number, author, body, comments, url} = this.issue;
 
     content.innerHTML = '';
 
+    content.appendChild(status);
+
+    const linkBar = document.createElement('div');
+    linkBar.style.cssText = "display: flex; align-items:center; justify-content: space-between";
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.textContent = url;
+
+    linkBar.appendChild(link);
+
+    const copyButton = document.createElement('button');
+    copyButton.textContent = 'Copy Link';
+    copyButton.type = 'button';
+    copyButton.addEventListener('click', () => this.selectAndCopy(link));
+
+    linkBar.appendChild(copyButton);
+    content.appendChild(linkBar);
+
+
     const heading = document.createElement('h1');
-    heading.style.marginBottom = '20px';
+    heading.style.margin = '5px 0 20px 0';
     heading.textContent = `${title} #${number}`;
 
     content.appendChild(heading);
@@ -159,6 +183,37 @@ class IssuePreview {
       this.handlePreviewClick(event));
 
     return preview;
+  }
+
+  selectAndCopy(link) {
+    if (window.getSelection) {
+      if (window.getSelection().empty) {
+        window.getSelection().empty();
+      }
+      const range = document.createRange();
+      range.selectNode(link);
+      window.getSelection().addRange(range);
+      this.copy();
+    }
+  }
+
+  copy() {
+    try {
+      const successful = document.execCommand('copy');
+      this.showSuccessStatus();
+    } catch (err) {
+      console.log('Oops, unable to copy');
+    }
+  }
+
+  showSuccessStatus() {
+    this.status.textContent = 'Link copied';
+    this.status.style.cssText = 'height: 30px; background: #DFF2BF; width: 100%; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; color: #4F8A10;';
+
+    setTimeout(() => {
+      this.status.textContent = '';
+      this.status.style.cssText = '';
+    }, 1000);
   }
 }
 
